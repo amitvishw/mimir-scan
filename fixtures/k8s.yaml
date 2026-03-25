@@ -1,0 +1,90 @@
+# Intentionally vulnerable Kubernetes manifests for testing Trivy
+# DO NOT deploy this to production
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vulnerable-pod
+spec:
+  # Bad: Running as root
+  securityContext:
+    runAsUser: 0
+  containers:
+  - name: app
+    image: nginx:latest  # Bad: Using 'latest' tag
+
+    # Bad: Privileged container
+    securityContext:
+      privileged: true
+      allowPrivilegeEscalation: true
+      runAsNonRoot: false
+      readOnlyRootFilesystem: false
+      capabilities:
+        add:
+          - ALL  # Bad: All capabilities
+
+    # Bad: No resource limits
+    # resources: {}
+
+    # Bad: Secrets in environment variables
+    env:
+    - name: DB_PASSWORD
+      value: "admin123"
+    - name: API_KEY
+      value: "sk-secret-key-12345"
+
+    # Bad: Mounting sensitive host paths
+    volumeMounts:
+    - name: host-root
+      mountPath: /host
+    - name: docker-sock
+      mountPath: /var/run/docker.sock
+
+  volumes:
+  # Bad: Mounting host root filesystem
+  - name: host-root
+    hostPath:
+      path: /
+  # Bad: Mounting Docker socket
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vulnerable-service
+spec:
+  type: LoadBalancer  # Bad: Exposing to internet without consideration
+  selector:
+    app: vulnerable
+  ports:
+  - port: 22  # Bad: SSH exposed
+    targetPort: 22
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-all
+spec:
+  podSelector: {}
+  ingress:
+  - {}  # Bad: Allow all ingress
+  egress:
+  - {}  # Bad: Allow all egress
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: plaintext-secret
+type: Opaque
+stringData:
+  # Bad: Secrets in plain text (should use sealed secrets or external secrets)
+  password: supersecretpassword123
+  api-key: sk-live-abcdef123456

@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "rule_id": "SEC001",
+      "level": "HIGH",
+      "msg": "Security issue",
+      "details": "Detailed description",
+      "file": "src/app.js",
+      "line": 25
+    }
+  ]
+}

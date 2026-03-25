@@ -1,0 +1,17 @@
+{
+  "results": [
+    {
+      "id": "VULN-001",
+      "sev": "high",
+      "title": "XSS",
+      "desc": "Cross-site scripting",
+      "file": "app.js",
+      "start": 10,
+      "end": 20,
+      "cwe": "CWE-79",
+      "cve": "CVE-2023-1234",
+      "fix": "Sanitize input",
+      "code": "const x = input;"
+    }
+  ]
+}

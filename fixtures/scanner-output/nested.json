@@ -1,0 +1,9 @@
+{
+  "data": {
+    "scan": {
+      "vulnerabilities": [
+        { "sev": "critical", "name": "Test", "desc": "Desc", "path": "file.js" }
+      ]
+    }
+  }
+}

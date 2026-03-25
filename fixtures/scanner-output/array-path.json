@@ -1,0 +1,9 @@
+{
+  "scans": [
+    {
+      "findings": [
+        { "severity": "low", "message": "Info", "path": "test.js" }
+      ]
+    }
+  ]
+}

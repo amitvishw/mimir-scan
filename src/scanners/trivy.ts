@@ -69,6 +69,13 @@ export class TrivyScanner implements Scanner {
         ["fs", "--format", "json", "--scanners", "vuln,misconfig", "--skip-db-update", target],
         { cwd: target, timeout: 300_000 }
       );
+      if (result.stderr?.includes("--skip-db-update cannot be specified on the first run")) {
+        result = await runCommand(
+          "trivy",
+          ["fs", "--format", "json", "--scanners", "vuln,misconfig", target],
+          { cwd: target, timeout: 300_000 }
+        );
+      }
     } catch (err) {
       return makeResult({
         success: false,

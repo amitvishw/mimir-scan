@@ -1,0 +1,24 @@
+{
+  "plugins": [
+    {
+      "name": "mock-scanner",
+      "displayName": "Mock Scanner (E2E Test)",
+      "category": "sast",
+      "checkCommand": "bash",
+      "command": "bash",
+      "args": ["-c", "cat << 'EOF'\n{\"findings\":[{\"id\":\"MOCK-001\",\"severity\":\"medium\",\"title\":\"Mock Finding\",\"description\":\"Test finding from custom plugin\",\"file\":\"app.js\",\"line\":1}]}\nEOF"],
+      "outputFormat": "json",
+      "parser": {
+        "resultsPath": "findings",
+        "fieldMapping": {
+          "id": "id",
+          "severity": "severity",
+          "title": "title",
+          "description": "description",
+          "filePath": "file",
+          "startLine": "line"
+        }
+      }
+    }
+  ]
+}

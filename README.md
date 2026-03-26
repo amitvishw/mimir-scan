@@ -18,13 +18,17 @@ Wraps industry-standard security scanners (Semgrep, Trivy, Gitleaks) plus a buil
 
 ## Quick Start
 
-### Using npx (Recommended)
+### From Source (Recommended)
 
-No installation required. Configure your MCP client to run:
+Clone the repo and install dependencies once:
 
 ```bash
-npx mimir-scan
+git clone https://github.com/amitvishw/mimir-scan.git
+cd mimir-scan
+bun install
 ```
+
+Then point your MCP client at the local install (see [MCP Client Configuration](#mcp-client-configuration) below).
 
 ### Using Docker
 
@@ -45,8 +49,8 @@ Add to your Claude Code settings (`~/.claude/settings.json` or project's `.mcp.j
 {
   "mcpServers": {
     "mimir": {
-      "command": "npx",
-      "args": ["-y", "mimir-scan"],
+      "command": "bun",
+      "args": ["run", "--cwd", "/path/to/mimir-scan", "start"],
       "env": {
         "MIMIR_TARGET_DIR": "/path/to/your/project"
       }
@@ -74,8 +78,8 @@ Add to `.vscode/mcp.json` in your project:
 {
   "servers": {
     "mimir": {
-      "command": "npx",
-      "args": ["-y", "mimir-scan"],
+      "command": "bun",
+      "args": ["run", "--cwd", "/path/to/mimir-scan", "start"],
       "env": {
         "MIMIR_TARGET_DIR": "${workspaceFolder}"
       }
@@ -92,8 +96,8 @@ Add to Cursor's MCP settings:
 {
   "mcpServers": {
     "mimir": {
-      "command": "npx",
-      "args": ["-y", "mimir-scan"],
+      "command": "bun",
+      "args": ["run", "--cwd", "/path/to/mimir-scan", "start"],
       "env": {
         "MIMIR_TARGET_DIR": "/path/to/your/project"
       }
@@ -286,7 +290,7 @@ Add your own scanners by creating a `.mimir.json` file in your project root:
 Enable your custom scanner:
 
 ```bash
-MIMIR_SCANNERS=semgrep,my-scanner npx mimir-scan
+MIMIR_SCANNERS=semgrep,my-scanner bun run --cwd /path/to/mimir-scan start
 ```
 
 ## Development
@@ -294,7 +298,6 @@ MIMIR_SCANNERS=semgrep,my-scanner npx mimir-scan
 ### Prerequisites
 
 - [Bun](https://bun.sh) runtime
-- Node.js 18+ (for npx compatibility)
 
 ### Setup
 

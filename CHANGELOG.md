@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Claude Code Plugin skills**: `/mimir-scan:scan` runs the full scan → fix → verify workflow automatically; `/mimir-scan:check` reports scanner availability with install hints
+- **`check` skill**: expanded with descriptions of all four scanners and their detection categories
+
+### Changed
+
+- MCP server key renamed from `mimir-scan` to `mimir` in `.mcp.json`, consistent with the README examples and all other MCP client configs. Tool names in Claude Code simplify from `plugin:mimir-scan:mimir-scan - mimir_*` to `plugin:mimir-scan:mimir - mimir_*`
+---
+
 ## [0.1.0] - 2026-03-23
 
 ### Added

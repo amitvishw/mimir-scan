@@ -4,7 +4,7 @@
 
 An MCP (Model Context Protocol) security scanner that integrates with AI coding agents like Claude Code, GitHub Copilot, Cursor, and others.
 
-Wraps industry-standard security scanners (Semgrep, Trivy, Gitleaks) and exposes them as tools that any MCP-compatible AI agent can call.
+Wraps industry-standard security scanners (Semgrep, Trivy, Gitleaks) plus a built-in prompt injection detector, and exposes them as tools that any MCP-compatible AI agent can call.
 
 ## Features
 
@@ -31,7 +31,8 @@ npx mimir-scan
 Docker bundles all scanners - no local installation needed:
 
 ```bash
-docker run --rm -i -v /path/to/project:/workspace ghcr.io/amitvishw/mimir-scan:latest
+docker build -t mimir-scan .
+docker run --rm -i -v /path/to/project:/workspace mimir-scan
 ```
 
 ## MCP Client Configuration
@@ -53,6 +54,17 @@ Add to your Claude Code settings (`~/.claude/settings.json` or project's `.mcp.j
   }
 }
 ```
+
+#### Claude Code Plugin (with Skills)
+
+If you use Mimir as a [Claude Code plugin](https://docs.anthropic.com/en/docs/claude-code/plugins), it ships with two built-in skills that automate the full scan workflow:
+
+| Skill | Trigger | What it does |
+|-------|---------|--------------|
+| `/mimir-scan:scan` | After writing code, on demand | Full scan → grade → findings → autofix → verify loop |
+| `/mimir-scan:check` | When asking about scanner setup | Reports which scanners are installed with install hints |
+
+The plugin registers the MCP server under the name `mimir`, so all tools are available as `mimir:mimir_scan`, `mimir:mimir_verify`, etc.
 
 ### VS Code / GitHub Copilot
 
@@ -92,7 +104,15 @@ Add to Cursor's MCP settings:
 
 ### Docker Configuration
 
-For any MCP client, use Docker to avoid installing scanners locally:
+For any MCP client, use Docker to avoid installing scanners locally.
+
+Build the image first:
+
+```bash
+docker build -t mimir-scan .
+```
+
+Then configure your MCP client:
 
 ```json
 {
@@ -102,7 +122,7 @@ For any MCP client, use Docker to avoid installing scanners locally:
       "args": [
         "run", "--rm", "-i",
         "-v", "/path/to/your/project:/workspace:ro",
-        "ghcr.io/amitvishw/mimir-scan:latest"
+        "mimir-scan"
       ]
     }
   }

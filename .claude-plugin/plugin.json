@@ -1,9 +1,25 @@
 {
   "name": "mimir-scan",
-  "description": "Mimir Scan - AI security scanner that integrates Semgrep (SAST), Trivy (SCA/IaC), Gitleaks (secrets), and Prompt Injection detection with AI coding agents. Like Mimir advises Kratos of dangers, Mimir-Scan reveals hidden security threats in your code.",
+  "version": "0.1.0",
+  "description": "Mimir Scan - AI security scanner that integrates Semgrep (SAST), Trivy (SCA/IaC), Gitleaks (secrets), and Prompt Injection detection with AI coding agents.",
   "author": {
-    "name": "Amit Vishwakarma"
+    "name": "Amit Vishwakarma",
+    "url": "https://github.com/amitvishw"
   },
   "homepage": "https://github.com/amitvishw/mimir-scan",
-  "keywords": ["mimir", "security", "scanner", "sast", "sca", "secrets", "semgrep", "trivy", "gitleaks", "vulnerability", "prompt-injection", "ai-security"]
+  "repository": "https://github.com/amitvishw/mimir-scan",
+  "license": "ISC",
+  "keywords": [
+    "security",
+    "sast",
+    "sca",
+    "secrets",
+    "semgrep",
+    "trivy",
+    "gitleaks",
+    "vulnerability",
+    "prompt-injection",
+    "ai-security"
+  ],
+  "mcpServers": "./.mcp.json"
 }

@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - MCP server key renamed from `mimir-scan` to `mimir` in `.mcp.json`, consistent with the README examples and all other MCP client configs. Tool names in Claude Code simplify from `plugin:mimir-scan:mimir-scan - mimir_*` to `plugin:mimir-scan:mimir - mimir_*`
+
+### Fixed
+
+- Trivy scan now retries without `--skip-db-update` when the vulnerability database has not been downloaded yet, preventing a failure on first run
 ---
 
 ## [0.1.0] - 2026-03-23
